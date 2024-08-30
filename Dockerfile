@@ -9,17 +9,15 @@ COPY package*.json ./
 COPY tsconfig.json ./
 COPY prisma ./prisma
 COPY src ./src
+COPY .env .env 
 
-# Instale as dependências
-# Compile o TypeScript
+# Instale as dependências e compile o TypeScript
 RUN npm install && \
     npm run build
 
-# Rodar as migrações
-RUN npm run migrate
 
 # Exponha a porta
 EXPOSE 3000
 
 # Execute as migrações e inicie o aplicativo
-CMD ["sh", "-c", "npm start"]
+CMD ["sh", "-c", "npm start", "npm run migrate"]
