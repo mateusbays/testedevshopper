@@ -34,6 +34,8 @@ prisma/: Contém o esquema e as migrações do banco de dados gerenciados pelo P
 docker-compose.yml: Define os serviços necessários para executar a aplicação em containers Docker.
 .env: Arquivo de configuração para variáveis de ambiente.
 
+Observações:
+A API DO GEMINI, está bastante instável, portanto, pode acontecer de receber um erro interno em algumas requisições, esses erros foram tratados. Muitas vezes, somente reenviar a chamada da requisição para o endpoint já resolve e realiza a leitura da imagem.
 
 Exemplos de imagens base64 para utilizar:
 
