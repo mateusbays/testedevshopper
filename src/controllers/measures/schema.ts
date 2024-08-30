@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { CustomError } from "../../errors/customErrors";
 
 const uuidRegex =
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
@@ -42,3 +43,16 @@ export const listConsumersReadingSchema = Joi.object({
     "string.valid": "Measure type must be either WATER or GAS",
   }),
 });
+
+export const validateSchema = <T>(
+  schema: Joi.ObjectSchema<T>,
+  data: T
+): void => {
+  const { error } = schema.validate(data, { abortEarly: false });
+  if (error) {
+    throw new CustomError(
+      "INVALID_DATA",
+      error.details.map((d) => d.message).join(", ")
+    );
+  }
+};

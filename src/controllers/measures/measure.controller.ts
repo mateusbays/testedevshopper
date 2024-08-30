@@ -9,8 +9,8 @@ import {
   confirmReadingSchema,
   listConsumersReadingSchema,
   uploadImageSchema,
+  validateSchema,
 } from "./schema";
-import Joi from "joi";
 import { handleError } from "../../errors/handleError";
 
 class MeasureController {
@@ -22,7 +22,7 @@ class MeasureController {
 
   public uploadImage = async (req: Request, res: Response): Promise<void> => {
     try {
-      this.validateSchema(uploadImageSchema, req.body);
+      validateSchema(uploadImageSchema, req.body);
 
       const result = await this.measureService.uploadImage(
         req.body as UploadRequestBody
@@ -39,7 +39,7 @@ class MeasureController {
     res: Response
   ): Promise<void> => {
     try {
-      this.validateSchema(confirmReadingSchema, req.body);
+      validateSchema(confirmReadingSchema, req.body);
 
       const result = await this.measureService.confirmReading(
         req.body as ConfirmReadingRequestBody
@@ -58,7 +58,7 @@ class MeasureController {
     try {
       const { customer_code, measure_type } = req.params;
 
-      this.validateSchema(listConsumersReadingSchema, req.body);
+      validateSchema(listConsumersReadingSchema, req.body);
 
       const result = await this.measureService.listConsumersReading(
         customer_code,
@@ -77,13 +77,6 @@ class MeasureController {
       handleError(err, res);
     }
   };
-
-  private validateSchema(schema: Joi.ObjectSchema<any>, data: any): void {
-    const { error } = schema.validate(data);
-    if (error) {
-      throw new CustomError("INVALID_DATA", error.message);
-    }
-  }
 }
 
 export default new MeasureController();
