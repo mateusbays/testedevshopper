@@ -15,6 +15,9 @@ COPY src ./src
 RUN npm install && \
     npm run build
 
+# Rodar as migrações
+RUN npm run migrate
+
 # Exponha a porta
 EXPOSE 3000
 
