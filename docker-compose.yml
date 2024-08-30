@@ -14,12 +14,19 @@ services:
       - "5432:5432"
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d consumption_reading"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
 
   consumption_reading:
     build: .
     container_name: consumption_reading_service
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     ports:
       - "3000:3000"
     environment:
