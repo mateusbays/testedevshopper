@@ -26,7 +26,6 @@ build/
 
 # Docker files
 docker-compose.override.yml
-Dockerfile
 .dockerignore
 
 # IDEs and editors
