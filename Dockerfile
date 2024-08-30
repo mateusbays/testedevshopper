@@ -11,7 +11,9 @@ COPY prisma ./prisma
 COPY src ./src
 
 # Instale as dependências
-RUN npm install
+# Compile o TypeScript
+RUN npm install && \
+    npm run build
 
 # Exponha a porta
 EXPOSE 3000
